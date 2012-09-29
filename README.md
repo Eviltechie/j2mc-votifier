@@ -1,2 +1,2 @@
-j2mc-redemption
+j2mc-votifier
 ===============
