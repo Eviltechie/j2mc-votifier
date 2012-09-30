@@ -1,0 +1,7 @@
+name: Joe Votifier
+main: to.joe.votifier.J2MC_Votifier
+version: 0.1
+depend: [Votifier]
+website: http://forums.joe.to
+author: Eviltechie
+description: Logs votes
