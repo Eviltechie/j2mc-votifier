@@ -1,4 +1,4 @@
-package to.joe.votifier;
+package to.joe.j2mc.votifier;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
