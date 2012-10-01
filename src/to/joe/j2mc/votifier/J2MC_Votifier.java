@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import to.joe.j2mc.core.J2MC_Manager;
@@ -92,15 +93,17 @@ public class J2MC_Votifier extends JavaPlugin implements Listener {
             ResultSet rs = ps.executeQuery();
             Player p = event.getPlayer();
             if (rs.next()) {
-                p.sendMessage(ChatColor.GREEN + "Thanks for voting in the past 24 hours. You have access to /hat");
+                p.sendMessage(ChatColor.GREEN + "Thanks for voting in the past 24 hours");
+                p.sendMessage(ChatColor.GREEN + "As a reward, you have access to /hat");
                 J2MC_Manager.getPermissions().addFlag(p, 'H');
             } else {
-                int helmet = p.getInventory().getHelmet().getTypeId();
-                if (helmet != Material.GOLD_HELMET.getId() || helmet != Material.IRON_HELMET.getId() || helmet != Material.DIAMOND_HELMET.getId() || helmet != Material.LEATHER_HELMET.getId()) {
-                    p.getInventory().setHelmet(null);
-                    p.sendMessage(ChatColor.RED + "You have not voted in the past 24 hours. Your hat has been removed.");
+                p.sendMessage(ChatColor.RED + "You have not voted in the past 24 hours.");
+                ItemStack headgear = p.getInventory().getHelmet();
+                if (headgear == null || headgear.getType().equals(Material.GOLD_HELMET) || headgear.getType().equals(Material.IRON_HELMET) || headgear.getType().equals(Material.DIAMOND_HELMET) || headgear.getType().equals(Material.LEATHER_HELMET) || headgear.getType().equals(Material.CHAINMAIL_HELMET)) {
+                    p.sendMessage(ChatColor.RED + "Visit http://joe.to/vote for details on voting");
                 } else {
-                    p.sendMessage(ChatColor.RED + "You have not voted in the past 24 hours. Visit http://joe.to/vote for details.");
+                    p.sendMessage(ChatColor.RED + "Your hat has been removed");
+                    p.getInventory().setHelmet(null);
                 }
             }
         } catch (SQLException e) {

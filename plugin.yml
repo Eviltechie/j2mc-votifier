@@ -1,5 +1,5 @@
 name: Joe Votifier
-main: to.joe.votifier.J2MC_Votifier
+main: to.joe.j2mc.votifier.J2MC_Votifier
 version: 0.1
 depend: [Votifier, Redemption]
 website: http://forums.joe.to
