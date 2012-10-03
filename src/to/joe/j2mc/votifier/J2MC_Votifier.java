@@ -3,8 +3,6 @@ package to.joe.j2mc.votifier;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,14 +34,15 @@ public class J2MC_Votifier extends JavaPlugin implements Listener {
             PreparedStatement ps = J2MC_Manager.getMySQL().getFreshPreparedStatementHotFromTheOven("INSERT INTO votes (address, service, timestamp, username) VALUES (?,?,?,?)");
             ps.setString(1, v.getAddress());
             ps.setString(2, v.getServiceName());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
-            ps.setTimestamp(3, new Timestamp(sdf.parse(v.getTimeStamp()).getTime()));
+            //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+            //ps.setTimestamp(3, new Timestamp(sdf.parse(v.getTimeStamp()).getTime()));
+            ps.setTimestamp(3, new Timestamp(Long.parseLong(v.getTimeStamp())*1000));
             ps.setString(4, v.getUsername());
             ps.execute();
         } catch (SQLException e) {
             getLogger().log(Level.SEVERE, "Something went wrong logging the vote in the database", e);
-        } catch (ParseException e) {
-            getLogger().log(Level.SEVERE, "Date parse error. Votifier must have fed us garbage", e);
+        //} catch (ParseException e) {
+            //getLogger().log(Level.SEVERE, "Date parse error. Votifier must have fed us garbage", e);
         }
 
         getServer().broadcastMessage(ChatColor.RED + v.getUsername() + ChatColor.AQUA + " has just voted for the server!");
