@@ -54,7 +54,7 @@ public class J2MC_Votifier extends JavaPlugin implements Listener {
         getServer().broadcastMessage(ChatColor.RED + "Visit http://joe.to/vote for details on how to vote and claim rewards");
 
         try {
-            int id = J2MC_Redemption.newCoupon(v.getUsername(), false, v.getServiceName(), System.currentTimeMillis() / 1000L + 86400, 1);
+            int id = J2MC_Redemption.newCoupon(v.getUsername(), false, v.getServiceName(), System.currentTimeMillis() / 1000L + 86400, 3);
             if (id != -1) {
                 int[] prizes = { 2256, 2257, 2258, 2259, 2260, 2261, 2262, 2263, 2264, 2265, 2266, 2267, 84 };
                 J2MC_Redemption.addItem(id, prizes[new Random().nextInt(prizes.length)]);
