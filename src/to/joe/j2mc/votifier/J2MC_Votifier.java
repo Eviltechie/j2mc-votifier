@@ -10,12 +10,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import to.joe.j2mc.core.J2MC_Manager;
-import to.joe.j2mc.redemption.J2MC_Redemption;
+import to.joe.redeem.PackageBuilder;
+import to.joe.redeem.exception.CouponCodeAlreadyExistsException;
 
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;
@@ -53,15 +56,15 @@ public class J2MC_Votifier extends JavaPlugin implements Listener {
         getServer().broadcastMessage(ChatColor.RED + v.getUsername() + ChatColor.AQUA + " has just voted for the server!");
         getServer().broadcastMessage(ChatColor.RED + "Visit http://joe.to/vote for details on how to vote and claim rewards");
 
+        PackageBuilder builder = new PackageBuilder().forPlayer(v.getUsername()).withExpiry(System.currentTimeMillis() / System.currentTimeMillis() / 1000L + 86400).withName(v.getServiceName() + "Voting Reward").withDescription("Thanks for voting!").withCreator("J2 Senior Staff");
+        int[] prizes = { 2256, 2257, 2258, 2259, 2260, 2261, 2262, 2263, 2264, 2265, 2266, 2267, 84 };
+        builder.withItemStack(new ItemStack(prizes[new Random().nextInt(prizes.length)]));
+        builder.withItemStack(new ItemStack(Material.EMERALD));
+
         try {
-            int id = J2MC_Redemption.newCoupon(v.getUsername(), false, v.getServiceName(), System.currentTimeMillis() / 1000L + 86400, 3);
-            if (id != -1) {
-                int[] prizes = { 2256, 2257, 2258, 2259, 2260, 2261, 2262, 2263, 2264, 2265, 2266, 2267, 84 };
-                J2MC_Redemption.addItem(id, prizes[new Random().nextInt(prizes.length)]);
-            }
-            J2MC_Redemption.addItem(id, 388, 3);
-        } catch (SQLException e) {
-            l.log(Level.SEVERE, "Error adding voting rewards", e);
+            builder.build();
+        } catch (SQLException | CouponCodeAlreadyExistsException e) {
+            getLogger().log(Level.SEVERE, "Error granting voting reward", e);
         }
 
         l.info(v.getAddress());
@@ -69,5 +72,4 @@ public class J2MC_Votifier extends JavaPlugin implements Listener {
         l.info(v.getTimeStamp());
         l.info(v.getUsername());
     }
-
 }
