@@ -56,7 +56,7 @@ public class J2MC_Votifier extends JavaPlugin implements Listener {
         getServer().broadcastMessage(ChatColor.RED + v.getUsername() + ChatColor.AQUA + " has just voted for the server!");
         getServer().broadcastMessage(ChatColor.RED + "Visit http://joe.to/vote for details on how to vote and claim rewards");
 
-        PackageBuilder builder = new PackageBuilder().forPlayer(v.getUsername()).withExpiry(System.currentTimeMillis() / System.currentTimeMillis() / 1000L + 86400).withName(v.getServiceName() + "Voting Reward").withDescription("Thanks for voting!").withCreator("J2 Senior Staff");
+        PackageBuilder builder = new PackageBuilder().forPlayer(v.getUsername()).withExpiry(System.currentTimeMillis() / 1000L + 86400).withName(v.getServiceName() + " Voting Reward").withDescription("Thanks for voting!").withCreator("J2 Senior Staff").onServer("MC3");
         int[] prizes = { 2256, 2257, 2258, 2259, 2260, 2261, 2262, 2263, 2264, 2265, 2266, 2267, 84 };
         builder.withItemStack(new ItemStack(prizes[new Random().nextInt(prizes.length)]));
         builder.withItemStack(new ItemStack(Material.EMERALD));
